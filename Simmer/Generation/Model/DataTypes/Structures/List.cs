@@ -1,12 +1,8 @@
 ﻿using System.Collections;
 using System.ComponentModel;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.Json;
-using Simmer.Deserialization;
-using YamlDotNet.Serialization;
+using Simmer.Generation.Model.Roots;
 
-namespace Simmer.Model.DataTypes.Structures;
+namespace Simmer.Generation.Model.DataTypes.Structures;
 
 public class List : DataTypeBase
 {
@@ -22,29 +18,25 @@ public class List : DataTypeBase
     public int? MaxRepeat { get; set; } = null;
 
     private bool _repeated = false;
-    private List<ListRoot> _repeats = new();
+    private List<Func<dynamic>> _repeatedGenerators = new();
 
     public override Func<dynamic> GetGenerator()
     {
         if (!_repeated)
         {
-            _repeats.AddRange(Enumerable.Range(0, GetMaxRepeats()).Select(_ => DeepCopy(Content) ?? throw new ApplicationException("Unable to DeepCopy content")));
+            _repeatedGenerators.AddRange(Enumerable.Range(0, GetMaxRepeats()).Select(_ => DeepCopy(Content).GetGenerator()));
             _repeated = true;
         }
         return () =>
         {
-            var content = new ListRoot();
-            var additionalRepeats = _repeats.Take(GetRepeats());
+            List<dynamic> content = new();
             
-            foreach(var additionalRepeat in additionalRepeats)
+            foreach(var generator in _repeatedGenerators.Take(GetRepeats()))
             {
-                content.AddRange(additionalRepeat);
+                content.AddRange(GetGeneratedValues(generator));
             }
-            
-            // Get the generator for the root
-            var generator = content.GetGenerator();
-            // Call the generator
-            return generator();
+
+            return content;
         };
     }
     
@@ -67,12 +59,26 @@ public class List : DataTypeBase
         
         if(MinRepeat.HasValue && MaxRepeat.HasValue)
         {
-            var val = Faker.Random.Int(MinRepeat.Value, MaxRepeat.Value);
-            Console.WriteLine("Repeating {0} times", val);
-            return val;
+            return Faker.Random.Int(MinRepeat.Value, MaxRepeat.Value);;
         }
 
         return 1;
+    }
+    
+    public IEnumerable<dynamic> GetGeneratedValues(Func<dynamic> generator)
+    {
+        var value = generator();
+        if (value is IEnumerable enumerable)
+        {
+            foreach (var item in enumerable)
+            {
+                yield return item;
+            }
+        }
+        else
+        {
+            yield return value;
+        }
     }
     
     public static ListRoot DeepCopy(ListRoot source)

@@ -1,4 +1,6 @@
-﻿namespace Simmer.Model.DataTypes.Structures;
+﻿using Simmer.Generation.Model.Roots;
+
+namespace Simmer.Generation.Model.DataTypes.Structures;
 
 public class Object : DataTypeBase
 {

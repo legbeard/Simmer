@@ -1,10 +1,10 @@
-﻿using Simmer.Model;
-using Simmer.Model.DataTypes;
-using YamlDotNet.Core;
+﻿using Simmer.Generation.Model;
+using Simmer.Generation.Model.DataTypes;
+using Simmer.Generation.Model.Roots;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Simmer.Deserialization;
+namespace Simmer.Generation;
 
 public static class YamlSerializer
 {

@@ -1,4 +1,4 @@
-﻿namespace Simmer.Model.DataTypes.Structures;
+﻿namespace Simmer.Generation.Model.DataTypes.Structures;
 
 public class OneOf : DataTypeBase
 {

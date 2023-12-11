@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="Bogus" Version="34.0.2" />
+      <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
       <PackageReference Include="YamlDotNet" Version="13.7.1" />
     </ItemGroup>
 
@@ -20,10 +21,6 @@
       <None Update="json.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Serialization" />
     </ItemGroup>
 
 </Project>

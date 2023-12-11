@@ -1,6 +1,6 @@
-using Simmer.Model.DataTypes;
+using Simmer.Generation.Model.DataTypes;
 
-namespace Simmer.Model;
+namespace Simmer.Generation.Model.Roots;
 
 /// <summary>
 /// Used when the root of the model yaml is a mapping
@@ -39,6 +39,10 @@ public class MappingRoot : Dictionary<string, DataTypeBase>, IPayloadGeneratorFa
         () => generators
             .Select(x => UnpackAndReplaceKeyIfKeyValuePair(x))
             .ToDictionary(x => x.Key, x => x.Value);
+    
+    // private static Func<dynamic> GetMultipleGenerators(Dictionary<string, Func<dynamic>> generators) =>
+    //     () => generators
+    //         .ToDictionary(x => x.Key, x => x.Value());
 
     private static KeyValuePair<string, dynamic> UnpackAndReplaceKeyIfKeyValuePair(KeyValuePair<string, Func<dynamic>> input)
     {

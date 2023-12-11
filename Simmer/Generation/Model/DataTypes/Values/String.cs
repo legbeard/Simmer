@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Bogus;
 
-namespace Simmer.Model.DataTypes.Values;
+namespace Simmer.Generation.Model.DataTypes.Values;
 
 public class String : DataTypeBase
 {
@@ -22,12 +22,10 @@ public class String : DataTypeBase
     
     [DefaultValue(null)]
     public int? Length { get; set; }
-
-    private readonly Faker _faker = new();
-
+    
     private int GetLength()
     {
-        return Length ?? _faker.Random.Int(MinLength, MaxLength);
+        return Length ?? Faker.Random.Int(MinLength, MaxLength);
     }
 
     public String()
@@ -44,16 +42,16 @@ public class String : DataTypeBase
     {
         var generatorFunc = Format switch
         {
-            StringValueFormat.Address => () => _faker.Address.FullAddress(),
-            StringValueFormat.AlphaNumeric => () => _faker.Random.AlphaNumeric(GetLength()),
+            StringValueFormat.Address => () => Faker.Address.FullAddress(),
+            StringValueFormat.AlphaNumeric => () => Faker.Random.AlphaNumeric(GetLength()),
             StringValueFormat.Constant => GetConstantGenerator(),
-            StringValueFormat.Email => () => _faker.Internet.Email(),
-            StringValueFormat.Guid => () => _faker.Random.Guid().ToString(),
-            StringValueFormat.Hexadecimal => () => _faker.Random.Hexadecimal(GetLength()),
-            StringValueFormat.Lorem => () => _faker.Lorem.Sentence(GetLength()),
-            StringValueFormat.Letters => () => _faker.Random.String2(GetLength()),
-            StringValueFormat.Url => () => _faker.Internet.Url(),
-            StringValueFormat.Uuid => () => _faker.Random.Uuid().ToString(),
+            StringValueFormat.Email => () => Faker.Internet.Email(),
+            StringValueFormat.Guid => () => Faker.Random.Guid().ToString(),
+            StringValueFormat.Hexadecimal => () => Faker.Random.Hexadecimal(GetLength()),
+            StringValueFormat.Lorem => () => Faker.Lorem.Sentence(GetLength()),
+            StringValueFormat.Letters => () => Faker.Random.String2(GetLength()),
+            StringValueFormat.Url => () => Faker.Internet.Url(),
+            StringValueFormat.Uuid => () => Faker.Random.Uuid().ToString(),
             _ => throw new ArgumentOutOfRangeException(nameof(Format), "Invalid string format. Please use one of the following: string, guid, email, url, hexadecimal, alphanumeric, uuid")
         };
 

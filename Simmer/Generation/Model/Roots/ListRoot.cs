@@ -1,6 +1,6 @@
-using Simmer.Model.DataTypes;
+using Simmer.Generation.Model.DataTypes;
 
-namespace Simmer.Model;
+namespace Simmer.Generation.Model.Roots;
 
 /// <summary>
 /// Used when the root of the model yaml is a list

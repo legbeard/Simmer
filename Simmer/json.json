@@ -1,12 +1,11 @@
-﻿{"menu": {
-  "id": "file",
-  "value": "File",
-  "popup": {
-    "menuitem": [
-      {"value": "New", "onclick": "CreateNewDoc()"},
-      {"value": "Open", "onclick": "OpenDoc()"},
-      {"value": "Close", "onclick": "CloseDoc()"}
-    ]
-  },
-  "int": 123
-}}
+﻿{
+  "deviceId": "1234567890",
+  "deviceName": "My Device",
+  "deviceType": "My Device Type",
+  "deviceModel": "My Device Model",
+  "timestamp": "2018-01-01T00:00:00.000Z",
+  "data": {
+    "temperature": 25.5,
+    "humidity": 50.0
+  }
+}

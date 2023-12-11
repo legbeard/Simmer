@@ -1,16 +1,36 @@
-list:
-  type: list
-  minRepeat: 0
-  maxRepeat: 10
+menu:
+  type: object
   content:
-    - type: object
+    id:
+      type: string
+      value: file
+    value:
+      type: string
+      value: File
+    popup:
+      type: object
       content:
-        createdAt:
-          type: timestamp
-          format: "yyyy-MM-ddTHH:mm:ss.fffffffZ"
-          startAt: 2018-01-01T00:00:00.0000000Z
-          increment: 00:00:01
-        id:
-          type: string
-          format: guid
-          generate: once
+        menuitem:
+          type: list
+          repeat: 3
+          content:
+            - type: object
+              content:
+                value:
+                  type: string
+                  value: New
+                onclick:
+                  type: string
+                  value: CreateNewDoc()
+    otherObj:
+      type: object
+      content:
+        menuitem:
+          type: list
+          content:
+            - type: string
+              value: a
+    int:
+      type: epochmillis
+      increment: 1000
+      start: 123

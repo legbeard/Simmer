@@ -1,4 +1,4 @@
-﻿namespace Simmer.Model.DataTypes.Values;
+﻿namespace Simmer.Generation.Model.DataTypes.Values;
 
 public class Name : DataTypeBase
 {

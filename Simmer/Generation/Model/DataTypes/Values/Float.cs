@@ -1,33 +1,29 @@
-﻿using System.ComponentModel;
+﻿
+using System.ComponentModel;
 
 namespace Simmer.Generation.Model.DataTypes.Values;
 
-public class Integer : DataTypeBase
+public class Float : DataTypeBase
 {
-    [DefaultValue(null)]
-    public int? Value { get; init; }
 
-    [DefaultValue(null)] 
-    public int? Increment { get; init; } = null;
-
-    [DefaultValue(null)] 
-    public int? Min { get; init; } = null;
-    
     [DefaultValue(null)]
-    public int? Max { get; init; } = null;
-    
+    public double? Value { get; set; } = null;
+    public double? Increment { get; set; } = null;
+
+    public double? Min { get; set; } = null;
+    public double? Max { get; set; } = null;
+
     private int _currentIteration = 0;
+    
+    public Float()
+    {
+    }
 
-    public Integer()
+    public Float(double value) : this()
     {
         
     }
     
-    public Integer(int value)
-    {
-        Value = value;
-    }
-
     public override Func<dynamic> GetGenerator()
     {
         if (Value.HasValue)
@@ -44,6 +40,6 @@ public class Integer : DataTypeBase
 
     protected override bool CanGenerate(object? value)
     {
-        return value is long or int;
+        return value is double or float;
     }
 }

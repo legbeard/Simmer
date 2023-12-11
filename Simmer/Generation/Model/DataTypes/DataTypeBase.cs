@@ -1,12 +1,8 @@
-﻿using System.Runtime.Serialization;
-using Bogus;
+﻿using Bogus;
 using Simmer.Extensions;
-using Simmer.Model.DataTypes.Structures;
-using Simmer.Model.DataTypes.Values;
 using YamlDotNet.Serialization;
-using String = Simmer.Model.DataTypes.Values.String;
 
-namespace Simmer.Model.DataTypes;
+namespace Simmer.Generation.Model.DataTypes;
 
 public abstract class DataTypeBase : IPayloadGeneratorFactory
 {
@@ -28,6 +24,9 @@ public abstract class DataTypeBase : IPayloadGeneratorFactory
 
     public static Type GetGeneratingType(object? value)
     {
+        // TODO: Make CanGenerate return a tuple of (bool, object[]), where the object[] is the arguments to the ctor
+        // TODO: Make this able to take an array of values and evaluate matches based on whether all values match
+        // TODO: Implement a priority system, where better matches get picked over more generic ones (e.g. string vs timestamp)
         return CanGenerateMappings.FirstOrDefault(mapping => mapping.canGenerate(value)).type
                ?? throw new Exception($"No type found for value {value}");
     }

@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Simmer.Deserialization;
+using Simmer.Generation;
 
 namespace Simmer.Benchmarks;
 

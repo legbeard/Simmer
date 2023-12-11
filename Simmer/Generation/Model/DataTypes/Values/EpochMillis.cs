@@ -1,53 +1,39 @@
-﻿namespace Simmer.Model.DataTypes.Values;
+﻿namespace Simmer.Generation.Model.DataTypes.Values;
 
 public class EpochMillis : DataTypeBase
 {
-    public const string Identifier = "epochmillis";
+    public long? Increment { get; init; } = null;
+
+    public long? StartAt { get; init; } = null;
     
-    public EpochMillisProgression Progression { get; set; } = EpochMillisProgression.Now;
-    
-    public long Increment { get; set; } = 1000;
-    
-    public string Start
-    {
-        get => _start.ToString();
-        set => _start = value switch {
-           "now" => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-           _ => long.TryParse(value, out var val) ? val : throw new ArgumentException($"{value} is not a valid {nameof(Start)}. Use a number or 'now'")
-        }; 
-    }
-    
-    private long _start = 0;
     private long _currentIteration = 0;
 
     public EpochMillis()
     {
-        
+        if (StartAt.HasValue && !Increment.HasValue)
+        {
+            throw new ArgumentException("Must supply 'increment' when supplying 'startAt'");
+        }
     }
     
-    public EpochMillis(long start)
+    public EpochMillis(long startAt)
     {
-        _start = start;
+        // For now, noop, since we can't provide increment.
+        // This makes all generated models with epoch millis use "now";
     }
     
     public override Func<dynamic> GetGenerator()
     {
-        return Progression switch
+        if (StartAt.HasValue && Increment.HasValue)
         {
-            EpochMillisProgression.Now => () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-            EpochMillisProgression.Linear => () => _start + Increment * _currentIteration++,
-            _ => throw new ArgumentOutOfRangeException($"Epoch Millis progression had an invalid value: {Progression}")
-        };
+            return () => StartAt.Value! + Increment.Value! * _currentIteration++;
+        }
+
+        return () => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 
     protected override bool CanGenerate(object? value)
     {
         return value is long or int;
-    }
-
-    public enum EpochMillisProgression
-    {
-        Now,
-        Linear
     }
 }

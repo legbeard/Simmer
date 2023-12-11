@@ -1,13 +1,12 @@
 ﻿using Bogus;
 
-namespace Simmer.Model.DataTypes.Values;
+namespace Simmer.Generation.Model.DataTypes.Values;
 
 public class Boolean : DataTypeBase
 {
-    public const string Identifier = "bool";
     private readonly Faker _faker = new ();
     
-    public bool? Value { get; set; } = null;
+    public bool? Value { get; init; } = null;
 
     public Boolean()
     {

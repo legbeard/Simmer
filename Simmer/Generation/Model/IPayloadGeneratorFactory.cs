@@ -1,4 +1,4 @@
-﻿namespace Simmer.Model;
+﻿namespace Simmer.Generation.Model;
 
 public interface IPayloadGeneratorFactory
 {
