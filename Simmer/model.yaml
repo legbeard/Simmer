@@ -1,0 +1,16 @@
+list:
+  type: list
+  minRepeat: 0
+  maxRepeat: 10
+  content:
+    - type: object
+      content:
+        createdAt:
+          type: timestamp
+          format: "yyyy-MM-ddTHH:mm:ss.fffffffZ"
+          startAt: 2018-01-01T00:00:00.0000000Z
+          increment: 00:00:01
+        id:
+          type: string
+          format: guid
+          generate: once
